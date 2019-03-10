@@ -32,7 +32,7 @@
             android:id="@+id/canvas"
             android:layout_below="@id/separatorOne"
             android:layout_width="match_parent"
-            android:layout_height="700dp"
+            android:layout_height="300dp"
             android:layout_marginBottom="10dp"/>
 
         <View
@@ -46,22 +46,22 @@
         <ImageButton
             android:id="@+id/rectangleButton"
             android:layout_below="@id/separatorTwo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/rectangle" />
 
         <ImageButton
             android:id="@+id/triangleButton"
             android:layout_below="@id/separatorTwo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_toEndOf="@+id/rectangleButton"
             android:layout_toRightOf="@+id/rectangleButton"
             android:scaleType="fitCenter"
@@ -70,10 +70,10 @@
         <ImageButton
             android:id="@+id/circleButton"
             android:layout_below="@id/separatorTwo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_toEndOf="@+id/triangleButton"
             android:layout_toRightOf="@+id/triangleButton"
             android:scaleType="fitCenter"
@@ -82,22 +82,22 @@
         <ImageButton
             android:id="@+id/lineButton"
             android:layout_below="@id/separatorTwo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_toEndOf="@+id/circleButton"
             android:layout_toRightOf="@+id/circleButton"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/line" />
 
         <ImageButton
-            android:id="@+id/refreshButton"
+            android:id="@+id/undoButton"
             android:layout_below="@id/separatorTwo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
             android:layout_toStartOf="@+id/colourButton"
             android:layout_toLeftOf="@+id/colourButton"
             android:scaleType="fitCenter"
@@ -106,14 +106,24 @@
         <ImageButton
             android:id="@+id/colourButton"
             android:layout_below="@id/separatorTwo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toStartOf="@+id/clearButton"
+            android:layout_toLeftOf="@+id/clearButton"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/colour_selector" />
+
+        <ImageButton
+            android:id="@+id/clearButton"
+            android:layout_below="@id/separatorTwo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/clear" />
 
     </RelativeLayout>
 

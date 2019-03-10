@@ -17,10 +17,19 @@ public class ShapeList {
         shapeList.add(shape);
     }
 
+    public void remove (int index) {
+        if (index >= 0 && index < shapeList.size())
+            shapeList.remove(index);
+    }
+
     public void draw(Canvas canvas, Paint paint) {
         for (Shape shape: shapeList) {
             shape.draw(canvas, paint);
         }
+    }
+
+    public int size() {
+        return shapeList.size();
     }
 
     public void clear() {

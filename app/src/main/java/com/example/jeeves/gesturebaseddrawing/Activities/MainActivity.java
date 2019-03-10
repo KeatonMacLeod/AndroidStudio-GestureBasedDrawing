@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -24,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private String currentlySelectedShape;
     private Resources resources;
     private ImageButton colorButton;
-    private ImageButton refreshButton;
+    private ImageButton clearButton;
+    private ImageButton undoButton;
     private ImageButton rectangleButton;
     private ImageButton triangleButton;
     private ImageButton circleButton;
@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
     public void setButtonListeners() {
 
         colorButton = (ImageButton) findViewById(R.id.colourButton);
-        refreshButton = (ImageButton) findViewById(R.id.refreshButton);
+        clearButton = (ImageButton) findViewById(R.id.clearButton);
+        undoButton = (ImageButton) findViewById(R.id.undoButton);
         rectangleButton = (ImageButton) findViewById(R.id.rectangleButton);
         triangleButton = (ImageButton) findViewById(R.id.triangleButton);
         circleButton = (ImageButton) findViewById(R.id.circleButton);
@@ -84,11 +85,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Initialize the functionality for the refresh button
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        // Initialize the functionality for the undo button
+        clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshCanvas(canvasView);
+                clearCanvas(canvasView);
+            }
+        });
+
+        // Initialize the functionality for the undo button
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                undoCanvas(canvasView);
             }
         });
 
@@ -154,8 +163,12 @@ public class MainActivity extends AppCompatActivity {
         return buttonColour;
     }
 
-    public void refreshCanvas(View v){
-        canvasView.refreshCanvas();
+    public void undoCanvas(View v){
+        canvasView.undoCanvas();
+    }
+
+    public void clearCanvas(View v){
+        canvasView.clearCanvas();
     }
 
     public void setCurrentlySelectedShape(String s) {
@@ -172,18 +185,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void setSelectedButton(ImageButton imageButton) {
 
-        if (refreshButton == imageButton) {
-            refreshButton.setBackgroundColor(selectedColour);
-        }
-        else {
-            refreshButton.setBackgroundColor(deselectedColour);
-        }
-
         if (colorButton == imageButton) {
             colorButton.setBackgroundColor(selectedColour);
         }
         else {
             colorButton.setBackgroundColor(deselectedColour);
+        }
+
+        if (clearButton == imageButton) {
+            clearButton.setBackgroundColor(selectedColour);
+        }
+        else {
+            clearButton.setBackgroundColor(deselectedColour);
+        }
+
+        if (undoButton == imageButton) {
+            undoButton.setBackgroundColor(selectedColour);
+        }
+        else {
+            undoButton.setBackgroundColor(deselectedColour);
         }
 
         if (rectangleButton == imageButton) {

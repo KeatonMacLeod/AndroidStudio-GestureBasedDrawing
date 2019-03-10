@@ -96,7 +96,7 @@ public class CanvasView extends View {
                 saveLine();
             }
 
-            clearCanvas();
+            prepareCanvas();
             coordinates.clear();
         }
     }
@@ -118,12 +118,18 @@ public class CanvasView extends View {
         }
     }
 
-    public void clearCanvas(){
+    public void prepareCanvas(){
         mPath.reset();
         invalidate();
     }
 
-    public void refreshCanvas() {
+    public void undoCanvas() {
+        shapeList.remove(shapeList.size()-1);
+        mPath.reset();
+        invalidate();
+    }
+
+    public void clearCanvas() {
         shapeList.clear();
         mPath.reset();
         invalidate();
