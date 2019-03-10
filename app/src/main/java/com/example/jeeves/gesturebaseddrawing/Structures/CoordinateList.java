@@ -15,6 +15,10 @@ public class CoordinateList {
         coordinates.add(new Coordinate(x, y));
     }
 
+    public void add(Coordinate coordinate) {
+        coordinates.add(coordinate);
+    }
+
     public void clear() {
         coordinates.clear();
     }

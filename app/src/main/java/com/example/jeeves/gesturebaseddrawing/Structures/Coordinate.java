@@ -25,4 +25,8 @@ public class Coordinate {
     public void setY(int y) {
         this.y = y;
     }
+
+    public Coordinate clone() {
+        return new Coordinate(this.getX(), this.getY());
+    }
 }

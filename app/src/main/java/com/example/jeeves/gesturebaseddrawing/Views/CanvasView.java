@@ -214,13 +214,7 @@ public class CanvasView extends View {
 
     // Processes the coordinates and draws the closest approximation of a Line
     private void saveLine() {
-        Coordinate first = coordinates.get(0);
-        Coordinate last = coordinates.get(coordinates.size()-1);
-
-        Point a = new Point((int)first.getX(), (int)first.getY());
-        Point b = new Point((int)last.getX(), (int)last.getY());
-
-        Line line = new Line(a, b, ((MainActivity)context).getButtonColour());
+        Line line = new Line(coordinates, ((MainActivity)context).getButtonColour());
         shapeList.add(line);
     }
 }
