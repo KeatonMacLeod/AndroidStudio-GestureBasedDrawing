@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">GestureBasedDrawing</string>
+    <string name="app_name">Picasso Gestures</string>
     <string name="RECTANGLE">rectangle</string>
     <string name="TRIANGLE">triangle</string>
     <string name="CIRCLE">circle</string>
     <string name="LINE">line</string>
+    <string name="FILL">Fill</string>
 </resources>

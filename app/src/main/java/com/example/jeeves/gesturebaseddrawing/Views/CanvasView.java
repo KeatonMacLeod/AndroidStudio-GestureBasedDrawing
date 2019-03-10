@@ -5,19 +5,24 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Switch;
 
 import com.example.jeeves.gesturebaseddrawing.Activities.MainActivity;
 import com.example.jeeves.gesturebaseddrawing.R;
 import com.example.jeeves.gesturebaseddrawing.Structures.Circle;
 import com.example.jeeves.gesturebaseddrawing.Structures.Coordinate;
 import com.example.jeeves.gesturebaseddrawing.Structures.CoordinateList;
+import com.example.jeeves.gesturebaseddrawing.Structures.Line;
 import com.example.jeeves.gesturebaseddrawing.Structures.Rectangle;
 import com.example.jeeves.gesturebaseddrawing.Structures.ShapeList;
+import com.example.jeeves.gesturebaseddrawing.Structures.Triangle;
 
 public class CanvasView extends View {
 
@@ -25,6 +30,7 @@ public class CanvasView extends View {
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private CoordinateList coordinates;
+    private Switch fillToggle;
     private boolean userDrawing = false;
     private Path mPath;
     private Resources resources;
@@ -45,7 +51,7 @@ public class CanvasView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStyle(Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeWidth(12f);
     }
@@ -59,25 +65,35 @@ public class CanvasView extends View {
     }
 
     protected void onDraw(Canvas canvas){
+        shapeList.draw(canvas, mPaint);
+        mPaint.setStyle(Style.STROKE);
+        mPaint.setColor(((MainActivity)context).getButtonColour());
         super.onDraw(canvas);
         canvas.drawPath(mPath, mPaint);
-        shapeList.draw(canvas, mPaint);
+        fillToggle = ((MainActivity)context).getFillToggleView();
 
         if (!userDrawing && coordinates.size() > 0) {
 
             String currentlySelectedShape = ((MainActivity) context).getCurrentlySelectedShape();
 
+            if (fillToggle.isChecked()) {
+                mPaint.setStyle(Style.FILL);
+            }
+            else {
+                mPaint.setStyle(Style.STROKE);
+            }
+
             if (currentlySelectedShape.equals(resources.getString(R.string.RECTANGLE))) {
-                saveRectangle(canvas);
+                saveRectangle();
             }
             else if (currentlySelectedShape.equals(resources.getString(R.string.TRIANGLE))) {
-                //DO THE THING
+                saveTriangle();
             }
             else if (currentlySelectedShape.equals(resources.getString(R.string.CIRCLE))) {
-                saveCircle(canvas);
+                saveCircle();
             }
             else if (currentlySelectedShape.equals(resources.getString(R.string.LINE))) {
-                //DO THE THING
+                saveLine();
             }
 
             clearCanvas();
@@ -149,43 +165,56 @@ public class CanvasView extends View {
      */
 
     // Processes the coordinates and draws the closest approximation of a Rectangle
-    private void saveRectangle(Canvas canvas) {
+    private void saveRectangle() {
         Coordinate largestX = coordinates.getLargestX();
         Coordinate largestY = coordinates.getLargestY();
         Coordinate smallestX = coordinates.getSmallestX();
         Coordinate smallestY = coordinates.getSmallestY();
 
-        Rectangle rectangle = new Rectangle(smallestX.getX(), smallestY.getY(), largestX.getX(), largestY.getY());
+        Rectangle rectangle = new Rectangle(smallestX.getX(), smallestY.getY(), largestX.getX(), largestY.getY(), ((MainActivity)context).getButtonColour(), mPaint.getStyle());
         shapeList.add(rectangle);
     }
 
-    private void saveCircle(Canvas canvas) {
+    // Processes the coordinates and draws the closest approximation of a Triangle
+    private void saveTriangle() {
+
         Coordinate largestX = coordinates.getLargestX();
         Coordinate largestY = coordinates.getLargestY();
         Coordinate smallestX = coordinates.getSmallestX();
         Coordinate smallestY = coordinates.getSmallestY();
 
-        float x = coordinates.getMeanX();
-        float y = coordinates.getMeanY();
-        float radius = (largestX.getX() - smallestX.getX() + largestY.getY() - smallestY.getY()) / 2;
+        Point a = new Point((int)smallestX.getX(), (int)largestY.getY());
+        Point b = new Point((int)largestX.getX(), (int)largestY.getY());
+        Point c = new Point(((int)smallestX.getX() + (int)largestX.getX()) / 2, (int)smallestY.getY());
 
-        Circle circle = new Circle(x, y, radius);
+        Triangle triangle = new Triangle(a, b, c, ((MainActivity)context).getButtonColour(), mPaint.getStyle());
+        shapeList.add(triangle);
+    }
+
+    // Processes the coordinates and draws the closest approximation of a Circle
+    private void saveCircle() {
+        Coordinate largestX = coordinates.getLargestX();
+        Coordinate largestY = coordinates.getLargestY();
+        Coordinate smallestX = coordinates.getSmallestX();
+        Coordinate smallestY = coordinates.getSmallestY();
+
+        float x = (largestX.getX() + smallestX.getX()) / 2;
+        float y = (largestY.getY() + smallestY.getY()) / 2;
+        float radius = (x - smallestX.getX() + y - smallestY.getY()) / 2;
+
+        Circle circle = new Circle(x, y, radius, ((MainActivity)context).getButtonColour(), mPaint.getStyle());
         shapeList.add(circle);
     }
 
+    // Processes the coordinates and draws the closest approximation of a Line
+    private void saveLine() {
+        Coordinate first = coordinates.get(0);
+        Coordinate last = coordinates.get(coordinates.size()-1);
 
-    // Processes the coordinates and draws the closest approximation of a Rectangle
-    private void drawTriangle() {
+        Point a = new Point((int)first.getX(), (int)first.getY());
+        Point b = new Point((int)last.getX(), (int)last.getY());
 
-    }
-
-    // Processes the coordinates and draws the closest approximation of a Rectangle
-    private void drawCircle() {
-
-    }
-
-    // Processes the coordinates and draws the closest approximation of a Rectangle
-    private void drawLine() {
-
+        Line line = new Line(a, b, ((MainActivity)context).getButtonColour());
+        shapeList.add(line);
     }
 }

@@ -23,6 +23,10 @@ public class CoordinateList {
         return coordinates.size();
     }
 
+    public Coordinate get(int index) {
+        return coordinates.get(index);
+    }
+
     // Finds the coordinate in the list of coordinates with the largest X value and returns it
     public Coordinate getLargestX() {
         Coordinate coordinateLargestX = null;
@@ -72,7 +76,7 @@ public class CoordinateList {
                 meanX += coordinate.getX();
             lastX = coordinate.getX();
         }
-        return meanX;
+        return meanX/coordinates.size();
     }
 
     // Finds the coordinate in the list of coordinates with the middle X value and returns it
@@ -84,6 +88,7 @@ public class CoordinateList {
                 meanY += coordinate.getY();
             lastY = coordinate.getX();
         }
-        return meanY;
+
+        return meanY/coordinates.size();
     }
 }
