@@ -27,36 +27,48 @@ public class Line extends Shape {
         paint.setColor(shapeColour);
         paint.setStyle(Paint.Style.STROKE);
         Path path = new Path();
-        if (coordinates.size() > 1) {
-            Coordinate previousCoordinate = null;
-            int step = 2;
-            for (int i=0; i<coordinates.size(); i+=step) {
 
-                Coordinate coordinate = coordinates.get(i);
-
-                if (i == 0)
-                {
-                    path.moveTo(coordinate.getX(), coordinate.getY());
-                }
-
-                else
-                {
-                    float middleX = (previousCoordinate.getX() + coordinate.getX()) / 2;
-                    float middleY = (previousCoordinate.getY() + coordinate.getY()) / 2;
-                    if (i == step)
-                    {
-                        path.lineTo(middleX, middleY);
-                    }
-                    else
-                    {
-                        path.quadTo(previousCoordinate.getX(), previousCoordinate.getY(), middleX, middleY);
-                    }
-                }
-
-                previousCoordinate = coordinate;
-            }
-            path.lineTo(previousCoordinate.getX(), previousCoordinate.getY());
+        // Simplified Straight Lines -> overall better for drawing simple images
+        if (coordinates.size() >= 2) {
+            Coordinate first = coordinates.get(0);
+            Coordinate last = coordinates.get(coordinates.size()-1);
+            path.moveTo(first.getX(), first.getY());
+            path.lineTo(last.getX(), last.getY());
             canvas.drawPath(path, paint);
         }
+
+        // Smoothed Out Lines -> overall better for drawing more complex images
+//        if (coordinates.size() > 1) {
+//            Coordinate previousCoordinate = null;
+//            int step = 5;
+//            for (int i=0; i<coordinates.size(); i+=step) {
+//
+//                Coordinate coordinate = coordinates.get(i);
+//
+//                if (i == 0)
+//                {
+//                    path.moveTo(coordinate.getX(), coordinate.getY());
+//                }
+//
+//                else
+//                {
+//                    float middleX = (previousCoordinate.getX() + coordinate.getX()) / 2;
+//                    float middleY = (previousCoordinate.getY() + coordinate.getY()) / 2;
+//                    if (i == step)
+//                    {
+//                        path.lineTo(middleX, middleY);
+//                    }
+//                    else
+//                    {
+//                        path.quadTo(previousCoordinate.getX(), previousCoordinate.getY(), middleX, middleY);
+//                    }
+//                }
+//
+//                previousCoordinate = coordinate;
+//            }
+//            previousCoordinate = coordinates.get(coordinates.size()-1);
+//            path.lineTo(previousCoordinate.getX(), previousCoordinate.getY());
+//            canvas.drawPath(path, paint);
+//        }
     }
 }
